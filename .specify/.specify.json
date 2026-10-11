@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "name": "landingpage",
+  "type": "sub-workspace",
+  "docs": {
+    "path": ".specify/configurations",
+    "rules": [
+      ".specify/configurations/rules.md"
+    ]
+  },
+  "git": {
+    "mainBranch": "develop"
+  },
+  "metadata": {},
+  "rules": [],
+  "commands": {}
+}
