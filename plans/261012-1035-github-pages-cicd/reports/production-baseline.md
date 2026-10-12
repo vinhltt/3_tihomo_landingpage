@@ -1,6 +1,6 @@
 # Production baseline manifest — 2026-10-12
 
-**Approval: granted. A = `0dcdfafdedfa566f24cd0c5f897a1f84f6338dfb`; B chưa tạo.** Maintainer chọn triển khai + negative CI probe trên PR và đưa hai `.specify` updates vào baseline; cho phép source/docs/history disclosure, selective commit/push, public/main/default/protection/Pages/environment settings và PR creation. Merge vẫn do maintainer thực hiện. User index được giữ nguyên bằng temporary index. Develop vẫn tại `f6d8581937706587da1a66fac040766b7f054d3d`.
+**Approval: granted. A = `0dcdfafdedfa566f24cd0c5f897a1f84f6338dfb`; initial B = `566f4f383adc03ed4741c21e72be935d001eab20`.** Maintainer duyệt source/docs/history, hai `.specify` updates, selective commit/push/settings/PR và negative CI probe. [PR #1](https://github.com/vinhltt/3_tihomo_landingpage/pull/1) đã có positive/negative CI; restoration `e21a4da5b138c7f2fb281586fa4b038eca924578` và các real evidence/runbook updates thuộc cùng PR, current head phải lấy từ GitHub khi nghiệm thu. Merge vẫn do maintainer thực hiện. User index giữ nguyên bằng temporary index; develop vẫn `f6d8581937706587da1a66fac040766b7f054d3d`.
 
 ## Candidate A — publish-ready site, không workflow
 
@@ -48,3 +48,7 @@ Local readiness: Node20 full build, isolated explicit Node22.23.3 npm ci/full bu
 - Source repository đã public; main remote seed đúng A, không pages.yml; main default, PR-only enforce-admin protection, zero required second reviewer, force/deletion disabled. Pages vẫn disabled tại bước này.
 - First protection request 422 do empty organization-only bypass allowance fields ở personal repo; đã bỏ field không áp dụng rồi read-back zero bypass, không giảm PR/admin gates.
 - SSH push identity verified đúng repo owner; user index SHA256 không đổi, local develop và parent gitlink không đổi.
+
+## Current production gate
+
+Required check `Pages build` / Actions App15368, strict/admin/PR protection, selected-main branch environment và Pages Actions source đã read-back. Provider Actions/Checks incident đang ảnh hưởng queue/check của current PR head; giữ draft, không dùng old-SHA green, không bypass/merge. [Remote receipt](github-pages-public-acceptance.md) giữ exact CI URLs, settings và observed limitations. Main vẫn A không workflow, chưa có public deployment.

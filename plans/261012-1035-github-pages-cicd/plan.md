@@ -79,6 +79,6 @@ flowchart LR
 
 ## Handoff
 
-Phases 1–3 có local execution evidence và tám Todo checked; phase 4 chưa thực hiện. [Public-safety preflight](./reports/public-safety-preflight.md), [baseline A/B cần duyệt](./reports/production-baseline.md), [base-path acceptance](./reports/base-path-local-acceptance.md) và [workflow review](./reports/workflow-contract-review.md) sở hữu bằng chứng. Remote mutation/commit/push cần maintainer approval final baseline/disclosure; plan không tự cấp quyền, agent không merge. Rehydrate phase Todo checkboxes khi tiếp tục; chỉ hoàn tất plan sau actual PR/main deployment và public acceptance.
+Phases 1–3 và P4.1 có execution evidence; source public/main bootstrap đã thực hiện theo maintainer approval, user staging/develop được giữ nguyên. [Baseline A/B](./reports/production-baseline.md), [local acceptance](./reports/base-path-local-acceptance.md), [workflow review](./reports/workflow-contract-review.md) và [remote receipts/provider blocker](./reports/github-pages-public-acceptance.md) sở hữu bằng chứng. P4.2 còn chờ actual current-head CI; P4.3–4 còn maintainer normal merge, same-run main artifact/deployment và public browser acceptance. Agent không merge/bypass hoặc dùng old-SHA green; rehydrate Todo checkboxes khi tiếp tục, không đánh dấu plan complete trước các gate còn thiếu.
 
 <!-- slug: github-pages-cicd -->

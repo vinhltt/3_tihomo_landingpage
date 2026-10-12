@@ -15,7 +15,7 @@ Repository dành cho homepage công khai và các landing page của TiHoMo, ph�
 - Cấu hình riêng: [.specify/.specify.json](.specify/.specify.json).
 - Quy tắc phạm vi: [.specify/configurations/rules.md](.specify/configurations/rules.md).
 
-Site prelaunch tĩnh **D · Jade Flow**, Astro 5 + Markdown, đủ **VI/EN** và **Sáng/Tối/Hệ thống**. Cấu hình đã chuẩn bị cho GitHub Pages tại `https://vinhltt.github.io/3_tihomo_landingpage/`; **chưa publish hoặc bật Pages**. [Plan CI/CD](plans/261012-1035-github-pages-cicd/plan.md) sở hữu gate triển khai; [nghiệm thu base path local](plans/261012-1035-github-pages-cicd/reports/base-path-local-acceptance.md) chỉ chứng minh working tree local. Ứng dụng tài chính vẫn chưa phát hành công khai; các khả năng AI là định hướng chưa triển khai/chưa kiểm chứng.
+Site prelaunch tĩnh **D · Jade Flow**, Astro 5 + Markdown, đủ **VI/EN** và **Sáng/Tối/Hệ thống**. GitHub Pages đã cấu hình Source GitHub Actions tại URL mục tiêu `https://vinhltt.github.io/3_tihomo_landingpage/`; **website chưa deploy/nghiệm thu public**. [Plan CI/CD](plans/261012-1035-github-pages-cicd/plan.md) và [remote execution receipt](plans/261012-1035-github-pages-cicd/reports/github-pages-public-acceptance.md) sở hữu gate/evidence triển khai; [nghiệm thu base path local](plans/261012-1035-github-pages-cicd/reports/base-path-local-acceptance.md) không thay bằng chứng public. Ứng dụng tài chính vẫn chưa phát hành công khai; các khả năng AI là định hướng chưa triển khai/chưa kiểm chứng.
 
 ## Chạy local
 

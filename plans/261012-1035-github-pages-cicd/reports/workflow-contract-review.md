@@ -44,7 +44,7 @@ Rollback dùng content-revert PR giữ pages.yml và required-check contract. Kh
 
 ## Remaining bootstrap evidence
 
-[Baseline A/B](production-baseline.md) đã được duyệt; exact A tree build/secret scan pass và đã seed main không workflow. Source public, default main và enforce-admin PR-only protection; Pages chưa enable. PR B cần CI thật để discover exact successful check/Actions App, selected-main environment, maintainer normal merge và main same-run artifact/deployment/public browser receipts. Không tự merge; [remote acceptance receipt](github-pages-public-acceptance.md) sở hữu trạng thái tiếp theo.
+[Baseline A/B](production-baseline.md) đã được duyệt; exact A tree build/secret scan pass và đã seed main không workflow. Real PR positive/negative CI observed; exact check/App đã enforce strict/admin/PR protection, main-only environment và Pages Actions source đã read-back. Current-head CI đang bị provider queue/Checks incident chặn; maintainer merge, main same-run artifact/deployment/public browser proof còn pending. Không tự merge hoặc dùng old-SHA green; [remote acceptance receipt](github-pages-public-acceptance.md) sở hữu trạng thái.
 
 ## Independent scoped review
 
