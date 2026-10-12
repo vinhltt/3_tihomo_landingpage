@@ -30,7 +30,7 @@ Các đường dẫn nguồn trong brief có thể thuộc workspace gửi, khô
 
 ## Chạy và kiểm tra site local
 
-Lệnh cài, chạy dev, build và preview nằm trong [README gốc](../README.md#chạy-local); `package.json` sở hữu định nghĩa script. [Astro config](../astro.config.mjs) và [checker](../scripts/check-dist.mjs) đã có contract publish-aware dưới project base. [Nghiệm thu local](../plans/261012-1035-github-pages-cicd/reports/base-path-local-acceptance.md) không chứng minh production đã publish hoặc crawl/index được; origin robots và URL public phải được kiểm tra lại sau deployment.
+Lệnh cài, chạy dev, build và preview nằm trong [README gốc](../README.md#chạy-local); `package.json` sở hữu định nghĩa script. [Astro config](../astro.config.mjs) và [checker](../scripts/check-dist.mjs) đọc origin/base production; custom domain hiện dùng root `/`. [Nghiệm thu project-base local](../plans/261012-1035-github-pages-cicd/reports/base-path-local-acceptance.md) là bằng chứng trước cutover, không chứng minh domain mới đã đạt; URL public phải kiểm tra sau deployment.
 
 ## Giữ tuyến tài liệu nhỏ
 
@@ -40,6 +40,6 @@ Tài liệu này chỉ điều hướng và giữ ranh giới giữa nguồn hi�
 
 [Brief CI/CD GitHub Pages](../plans/reports/brainstorm-261012-1722-github-pages-cicd.md) — contract chuẩn bị publish, phương án pipeline, gate nghiệm thu và rollback; chưa phải bằng chứng đã deploy.
 
-[Plan triển khai](../plans/261012-1035-github-pages-cicd/plan.md) — local/site/workflow và source bootstrap đã có evidence; [remote execution receipt](../plans/261012-1035-github-pages-cicd/reports/github-pages-public-acceptance.md) phân biệt PR CI/settings với current-head merge gate và public deployment còn pending.
+[Plan triển khai](../plans/261012-1035-github-pages-cicd/plan.md) và [remote execution receipt](../plans/261012-1035-github-pages-cicd/reports/github-pages-public-acceptance.md) giữ lịch sử bootstrap. Website đã deploy; [domain riêng và HTTPS](../README.md#domain-riêng-và-https) sở hữu cutover mới, DNS/TLS và root-path asset contract. Không dùng receipt cũ để xác nhận public verification sau đổi domain.
 
 [Vận hành CI/CD và rollback](../README.md#cicd-github-pages) — tuyến bootstrap có phê duyệt, lookup GitHub runs và content-revert PR giữ pipeline.

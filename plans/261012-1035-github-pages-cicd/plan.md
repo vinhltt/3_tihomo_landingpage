@@ -79,6 +79,6 @@ flowchart LR
 
 ## Handoff
 
-Phases 1–3 và P4.1–2 có execution evidence; public/main bootstrap đã được duyệt, user staging/develop giữ nguyên. [Baseline A/B](./reports/production-baseline.md), [local acceptance](./reports/base-path-local-acceptance.md), [workflow review](./reports/workflow-contract-review.md) và [remote receipts](./reports/github-pages-public-acceptance.md) sở hữu bằng chứng. Fresh evidence head `26c3ee5` đã có actual successful Node22 CI sau provider delay; mọi subsequent PR head vẫn cần exact required check trước merge. P4.3–4 còn maintainer normal merge, same-run main artifact/deployment và public browser acceptance. Agent không merge/bypass hoặc dùng old-SHA green; plan vẫn in-progress.
+Phases 1–3 và P4.1–2 có execution evidence; maintainer đã merge bootstrap vào main `44ecf3b`, website đã phục vụ artifact cũ. Các [remote receipts](./reports/github-pages-public-acceptance.md) giữ lịch sử bootstrap, không xác nhận cutover sau đó. Maintainer chọn `tihomo.vinhltt.com`; old project-base CSS URL HTTP404 trong khi root asset HTTP200, nên origin/base đã sửa theo [runbook domain riêng](../../README.md#domain-riêng-và-https). [Cutover journal](../journals/2026-10-12-repair-custom-domain-root-assets.md) ghi Node22/root desktop/mobile proof; DNS đã successful theo maintainer, TLS đang provision. P4.3–4 vẫn cần latest-head fix CI, maintainer normal merge và actual main artifact/deployment/public HTTPS acceptance trên domain mới. Agent không merge/bypass; user staging/develop giữ nguyên, plan vẫn in-progress.
 
 <!-- slug: github-pages-cicd -->
