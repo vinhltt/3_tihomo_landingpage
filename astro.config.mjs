@@ -36,8 +36,8 @@ function rehypeScrollTables() {
 }
 
 export default defineConfig({
-  site: 'https://vinhltt.github.io',
-  base: '/3_tihomo_landingpage/',
+  site: 'https://tihomo.vinhltt.com',
+  base: '/',
   output: 'static',
   trailingSlash: 'always',
   i18n: {
