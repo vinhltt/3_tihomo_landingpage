@@ -8,7 +8,7 @@
 
 ## Cấu hình thực thi
 
-- Nhánh chính của repository là `develop`.
+- Nhánh production/default của repository là `main`; giữ `develop` làm nhánh tích hợp.
 - Khi nằm trong workspace TiHoMo, sử dụng spec và project memory tại workspace root.
 - Stack: Astro 5 (render tĩnh) + Markdown, TypeScript, npm. Lệnh dev/build/preview và kiểm tra hợp đồng sau build được khai báo trong `package.json` và `.specify/.specify.json`.
 - Chưa có lint hay bộ test riêng; `npm run build` gồm `astro check`, `astro build` và `scripts/check-dist.mjs`.

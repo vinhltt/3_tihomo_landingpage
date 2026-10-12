@@ -42,3 +42,4 @@ Tài liệu này chỉ điều hướng và giữ ranh giới giữa nguồn hi�
 
 [Plan triển khai](../plans/261012-1035-github-pages-cicd/plan.md) — gate source disclosure, publish-ready site, workflow và bootstrap production; còn chờ quyền remote và bằng chứng public.
 
+[Vận hành CI/CD và rollback](../README.md#cicd-github-pages) — tuyến bootstrap có phê duyệt, lookup GitHub runs và content-revert PR giữ pipeline.

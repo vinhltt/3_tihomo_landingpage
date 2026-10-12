@@ -1,6 +1,6 @@
 # Production baseline manifest — 2026-10-12
 
-**Approval: granted trong execution. A/B commit SHAs: chưa tạo.** Maintainer chọn triển khai + negative CI probe trên PR và đưa hai `.specify` updates vào baseline; cho phép source/docs/history disclosure, selective commit/push, public/main/default/protection/Pages/environment settings và PR creation. Merge vẫn do maintainer thực hiện. User index được giữ nguyên bằng temporary index. Existing HEAD: `f6d8581937706587da1a66fac040766b7f054d3d` (develop).
+**Approval: granted. A = `0dcdfafdedfa566f24cd0c5f897a1f84f6338dfb`; B chưa tạo.** Maintainer chọn triển khai + negative CI probe trên PR và đưa hai `.specify` updates vào baseline; cho phép source/docs/history disclosure, selective commit/push, public/main/default/protection/Pages/environment settings và PR creation. Merge vẫn do maintainer thực hiện. User index được giữ nguyên bằng temporary index. Develop vẫn tại `f6d8581937706587da1a66fac040766b7f054d3d`.
 
 ## Candidate A — publish-ready site, không workflow
 
@@ -40,3 +40,11 @@ Local readiness: Node20 full build, isolated explicit Node22.23.3 npm ci/full bu
 2. Maintainer cho phép selective commit/push, public visibility, main seed/default/protection, Pages/environment settings và PR creation.
 3. Record approved A/B SHA và prove A build từ chính tree đó.
 4. Agent không merge; maintainer normal merge sau CI/protection. Không ghi published hoặc complete khi thiếu live evidence.
+
+## Observed A bootstrap
+
+- A tree: 74 files, không workflow/config.yml/workflow review report; build từ exact archived commit tree bằng explicit Node22 npm ci/full build pass.
+- Gitleaks A directory và A+parent history (hai commits): exit 0, no findings.
+- Source repository đã public; main remote seed đúng A, không pages.yml; main default, PR-only enforce-admin protection, zero required second reviewer, force/deletion disabled. Pages vẫn disabled tại bước này.
+- First protection request 422 do empty organization-only bypass allowance fields ở personal repo; đã bỏ field không áp dụng rồi read-back zero bypass, không giảm PR/admin gates.
+- SSH push identity verified đúng repo owner; user index SHA256 không đổi, local develop và parent gitlink không đổi.
