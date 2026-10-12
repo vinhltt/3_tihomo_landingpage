@@ -1,0 +1,22 @@
+{
+  "name": "tihomo-landingpage",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^20.3.0 || >=22.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build && node scripts/check-dist.mjs",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "5.18.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "typescript": "5.9.3"
+  }
+}

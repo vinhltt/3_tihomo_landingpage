@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import { getLocalizedPosts } from '../lib/blog';
+import { articlePath, formatUpdated, localePaths, type Locale } from '../lib/locale';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const paths = localePaths[locale];
+const posts = await getLocalizedPosts(locale);
+const copy = {
+  vi: {
+    title: 'Hướng dẫn quản lý tài chính cá nhân nhiều tài khoản | TiHoMo',
+    description:
+      'Hướng dẫn tổng hợp thu–chi nhiều tài khoản, đối chiếu sao kê và quản lý khoản chi định kỳ, ngân sách. Phương pháp thực hành không yêu cầu tài khoản.',
+    breadcrumbs: 'Đường dẫn trang',
+    home: 'Trang chủ',
+    guides: 'Hướng dẫn',
+    heading: 'Hướng dẫn quản lý tài chính nhiều tài khoản',
+    intro:
+      'Ba bài hướng dẫn phương pháp thủ công áp dụng với sổ theo dõi, bảng tính hoặc ứng dụng bất kỳ. Nội dung không mô tả cách sử dụng TiHoMo; ứng dụng chưa phát hành công khai.',
+    updated: 'Cập nhật',
+    read: 'Đọc hướng dẫn',
+    directionPrompt: 'Tham khảo',
+    directionLink: 'định hướng tính năng',
+    directionCaveat: 'của TiHoMo. Các khả năng được đề xuất chưa phải tính năng đang hoạt động.',
+  },
+  en: {
+    title: 'Personal finance guides for multiple accounts | TiHoMo',
+    description:
+      'Practical guides to consolidating income and expenses across accounts, reconciling statements, and planning recurring payments and budgets. No account is required.',
+    breadcrumbs: 'Breadcrumb navigation',
+    home: 'Home',
+    guides: 'Guides',
+    heading: 'Financial management guides for multiple accounts',
+    intro:
+      'Three guides explain manual methods that can be applied with a ledger, spreadsheet or any application. They are not instructions for using TiHoMo; the application is not publicly available.',
+    updated: 'Updated',
+    read: 'Read the guide',
+    directionPrompt: 'Review TiHoMo’s',
+    directionLink: 'development directions',
+    directionCaveat: '— proposed capabilities, not operational features.',
+  },
+}[locale];
+---
+
+<Base locale={locale} title={copy.title} description={copy.description} current="blog">
+  <div class="wrap page-head hub-head">
+    <nav class="crumbs" aria-label={copy.breadcrumbs}>
+      <a href={paths.home}>{copy.home}</a>
+      <span aria-hidden="true"> / </span>
+      <span aria-current="page">{copy.guides}</span>
+    </nav>
+    <h1>{copy.heading}</h1>
+    <p class="lead">{copy.intro}</p>
+  </div>
+
+  <div class="wrap hub-content">
+    <ul class="post-list guide-list">
+      {
+        posts.map((post, index) => (
+          <li class="card guide-card">
+            <a class="guide-link" href={articlePath(locale, post.data.slug)} aria-labelledby={`guide-${post.data.slug}`}>
+              <span class="guide-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <h2 id={`guide-${post.data.slug}`}>{post.data.title}</h2>
+              <p>{post.data.description}</p>
+              <p class="meta">
+                {copy.updated}{' '}
+                <time datetime={post.data.updated.toISOString().slice(0, 10)}>
+                  {formatUpdated(post.data.updated, locale)}
+                </time>
+              </p>
+              <span class="guide-read">
+                {copy.read}
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none">
+                  <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="notice hub-note">
+      {copy.directionPrompt}{' '}<a href={`${paths.home}#direction`}>{copy.directionLink}</a>{' '}{copy.directionCaveat}
+    </p>
+  </div>
+</Base>
