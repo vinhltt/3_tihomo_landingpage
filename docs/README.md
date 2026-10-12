@@ -40,5 +40,6 @@ Tài liệu này chỉ điều hướng và giữ ranh giới giữa nguồn hi�
 
 [Brief CI/CD GitHub Pages](../plans/reports/brainstorm-261012-1722-github-pages-cicd.md) — contract chuẩn bị publish, phương án pipeline, gate nghiệm thu và rollback; chưa phải bằng chứng đã deploy.
 
-[Plan triển khai](../plans/261012-1035-github-pages-cicd/plan.md) — gate source disclosure, publish-ready site, workflow và bootstrap production; còn chờ quyền remote và bằng chứng public.
+[Plan triển khai](../plans/261012-1035-github-pages-cicd/plan.md) — local/site/workflow và source bootstrap đã có evidence; [remote execution receipt](../plans/261012-1035-github-pages-cicd/reports/github-pages-public-acceptance.md) phân biệt PR CI/settings với current-head merge gate và public deployment còn pending.
 
+[Vận hành CI/CD và rollback](../README.md#cicd-github-pages) — tuyến bootstrap có phê duyệt, lookup GitHub runs và content-revert PR giữ pipeline.

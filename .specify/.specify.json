@@ -9,7 +9,7 @@
     ]
   },
   "git": {
-    "mainBranch": "develop"
+    "mainBranch": "main"
   },
   "metadata": {},
   "rules": [],

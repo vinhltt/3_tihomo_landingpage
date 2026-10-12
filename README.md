@@ -8,14 +8,14 @@ Repository dành cho homepage công khai và các landing page của TiHoMo, ph�
 
 ## Trạng thái
 
-- Repository: https://github.com/vinhltt/3_tihomo_landingpage (private).
-- Nhánh chính: `develop`.
+- Repository: https://github.com/vinhltt/3_tihomo_landingpage (public).
+- Production/default: `main`; giữ `develop` làm nhánh tích hợp.
 - Git submodule trong workspace TiHoMo: `src/landingpage`.
 - Tên sub-workspace TDK: `landingpage`.
 - Cấu hình riêng: [.specify/.specify.json](.specify/.specify.json).
 - Quy tắc phạm vi: [.specify/configurations/rules.md](.specify/configurations/rules.md).
 
-Site prelaunch tĩnh **D · Jade Flow**, Astro 5 + Markdown, đủ **VI/EN** và **Sáng/Tối/Hệ thống**. Cấu hình đã chuẩn bị cho GitHub Pages tại `https://vinhltt.github.io/3_tihomo_landingpage/`; **chưa publish hoặc bật Pages**. [Plan CI/CD](plans/261012-1035-github-pages-cicd/plan.md) sở hữu gate triển khai; [nghiệm thu base path local](plans/261012-1035-github-pages-cicd/reports/base-path-local-acceptance.md) chỉ chứng minh working tree local. Ứng dụng tài chính vẫn chưa phát hành công khai; các khả năng AI là định hướng chưa triển khai/chưa kiểm chứng.
+Site prelaunch tĩnh **D · Jade Flow**, Astro 5 + Markdown, đủ **VI/EN** và **Sáng/Tối/Hệ thống**. GitHub Pages đã cấu hình Source GitHub Actions tại URL mục tiêu `https://vinhltt.github.io/3_tihomo_landingpage/`; **website chưa deploy/nghiệm thu public**. [Plan CI/CD](plans/261012-1035-github-pages-cicd/plan.md) và [remote execution receipt](plans/261012-1035-github-pages-cicd/reports/github-pages-public-acceptance.md) sở hữu gate/evidence triển khai; [nghiệm thu base path local](plans/261012-1035-github-pages-cicd/reports/base-path-local-acceptance.md) không thay bằng chứng public. Ứng dụng tài chính vẫn chưa phát hành công khai; các khả năng AI là định hướng chưa triển khai/chưa kiểm chứng.
 
 ## Chạy local
 
@@ -64,6 +64,32 @@ Fragment homepage dùng tiếng Anh ở cả VI/EN: `#problem`, `#platform`, `#a
 - Sơ đồ/biểu đồ homepage là HTML + CSS render sẵn (không JS, không ảnh): chữ nằm trong DOM, nhãn đi qua `home-content.ts`, màu qua token Jade Flow và luôn kèm chữ hoặc kiểu viền (viền đứt = một phần/định hướng). Mỗi figure có figcaption bắt đầu bằng “Minh họa”/“Illustration”. Số liệu chỉ lấy từ ví dụ minh họa có trong bài (biểu đồ 321.000 đ lấy từ bước 3 của bài Đối chiếu sao kê, tổng tự tính trong `HomePage.astro`); không thanh %, không ngày tháng.
 - Giọng biên tập ở cả VI/EN: chuyên nghiệp, rõ ràng và trung tính; tránh khẩu ngữ hoặc pha trộn thuật ngữ không cần thiết. VI ưu tiên “ghi chép/nhập liệu thủ công”, “tổng hợp dữ liệu”, “sổ theo dõi”, “chưa phát hành công khai”; EN ưu tiên manual bookkeeping/data entry, consolidate records, ledger, not publicly available. Không đổi mức xác nhận tính năng, phương pháp, phép tính, nguồn hay cảnh báo quốc gia để làm câu chữ thuyết phục hơn.
 - Không thêm form, analytics, quảng cáo hay nhúng bên thứ ba. [`Base.astro`](src/layouts/Base.astro) và [metadata endpoints](src/pages/) sở hữu canonical/hreflang/sitemap/robots theo config production. `robots.txt` dưới project base không phải chính sách REP hiệu lực: phải kiểm tra `/robots.txt` tại origin khi nghiệm thu public. Hosting GitHub có chính sách log riêng; không diễn giải “site không tracking” thành “hạ tầng không ghi truy cập”.
+
+## CI/CD GitHub Pages
+
+[`pages.yml`](.github/workflows/pages.yml) sở hữu triggers, toolchain, permissions, concurrency và artifact contract. Pipeline dùng build command hiện hành thay vì một build convention riêng. Workflow cần được merge qua PR bootstrap sau CI/protection; **chưa có deployment public được nghiệm thu**. [Workflow review](plans/261012-1035-github-pages-cicd/reports/workflow-contract-review.md) phân biệt schema/static proof với GitHub run thật.
+
+### Bootstrap và quyền thực thi
+
+Trước public source/history, maintainer duyệt [disclosure preflight](plans/261012-1035-github-pages-cicd/reports/public-safety-preflight.md), [baseline A/B](plans/261012-1035-github-pages-cicd/reports/production-baseline.md) và final diff; scan lại phần mới. Public repo công khai cả tài liệu và lịch sử, không chỉ artifact website. Không coi chuyển lại private là thu hồi exposure.
+
+[Production bootstrap gate](plans/261012-1035-github-pages-cicd/phase-04-production-bootstrap-acceptance.md) sở hữu trình tự: seed A không workflow → PR-only/admin protection → PR B thêm workflow → observe và enforce exact build check/Actions App → selected-main environment và Pages Source GitHub Actions → maintainer merge. Không seed workflow vào main để tránh publication trước protection; không tự merge hoặc bypass gate. Giữ develop và không cập nhật parent gitlink trong thao tác này.
+
+### Quan sát CI và production
+
+Khi kiểm tra PR/build/deploy của repository này, dùng GitHub Actions làm nguồn build/deploy logs, GitHub Settings làm nguồn protection/Pages/environment và URL HTTPS làm bằng chứng artifact thực. Cần quyền repo để đọc và admin đã được maintainer cấp để đổi settings; `gh auth` dùng credential quản lý bởi CLI, không thêm PAT/secret vào workflow hoặc tài liệu. Thiếu quyền thì dừng settings mutation, không nới pipeline.
+
+```bash
+gh run list --repo vinhltt/3_tihomo_landingpage --workflow pages.yml --branch main --event push --limit 10 --json databaseId,headSha,event,status,conclusion,url
+```
+
+Chọn run ID từ kết quả, rồi dùng `gh run view <run-id> --repo vinhltt/3_tihomo_landingpage --log` để đọc phạm vi run cần điều tra; không public raw logs nếu có dữ liệu nhạy cảm. Run phải có event push và head SHA đúng main merge; xác minh build, same-run `github-pages` artifact, deployment SHA/URL rồi nghiệm thu đủ route/assets/metadata/theme tại URL public. Workflow/check xanh không tự chứng minh browser hoặc indexability. API báo lỗi/quyền thay đổi thì xác minh account/repo/settings theo gate bootstrap, không đoán rằng repo đã deploy.
+
+Native concurrency không bảo đảm FIFO hoặc newest-SHA; không rerun old-SHA run để publish lại. PR và develop không có đường publish qua workflow này.
+
+### Rollback nội dung
+
+Chọn content revision đã publish thành công, tạo PR revert phần nội dung lỗi vào main và **giữ workflow/build-check contract đang hoạt động**; CI → maintainer merge → build/deploy SHA mới qua cùng pipeline. Không revert toàn bộ PR bootstrap B vì sẽ xóa workflow duy nhất; A không workflow chưa từng là successful public revision. Lỗi first launch chưa có bản public trước đó cần corrective PR giữ CI/CD. Không force push, upload artifact bằng tay, rerun artifact cũ hoặc tắt protection.
 
 ## Làm việc trong workspace TiHoMo
 
