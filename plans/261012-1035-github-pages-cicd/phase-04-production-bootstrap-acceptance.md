@@ -68,7 +68,7 @@ Tất cả file dưới `D:/1_workspace/0_personal/3_tihomo/src/landingpage/`:
 ## Todo
 
 - [x] P4.1 — Duyệt exposure/baseline A+B và bootstrap public/main/default/PR-only protection an toàn.
-- [ ] P4.2 — Prove real PR Node22 CI, enforce observed required check, configure main-only environment và Pages Actions source.
+- [x] P4.2 — Prove real PR Node22 CI, enforce observed required check, configure main-only environment và Pages Actions source.
 - [ ] P4.3 — Sau maintainer merge, prove same-run main deployment và public desktop/mobile acceptance đủ mười routes.
 - [ ] P4.4 — Ghi evidence/rollback runbook và cập nhật owning docs qua PR, không claim verification chưa exercised.
 

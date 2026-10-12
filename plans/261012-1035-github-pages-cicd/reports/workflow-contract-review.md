@@ -44,7 +44,7 @@ Rollback dùng content-revert PR giữ pages.yml và required-check contract. Kh
 
 ## Remaining bootstrap evidence
 
-[Baseline A/B](production-baseline.md) đã được duyệt; exact A tree build/secret scan pass và đã seed main không workflow. Real PR positive/negative CI observed; exact check/App đã enforce strict/admin/PR protection, main-only environment và Pages Actions source đã read-back. Current-head CI đang bị provider queue/Checks incident chặn; maintainer merge, main same-run artifact/deployment/public browser proof còn pending. Không tự merge hoặc dùng old-SHA green; [remote acceptance receipt](github-pages-public-acceptance.md) sở hữu trạng thái.
+[Baseline A/B](production-baseline.md) đã được duyệt; exact A tree build/secret scan pass và đã seed main không workflow. Real PR positive/negative/recovery CI observed; exact check/App đã enforce strict/admin/PR protection, main-only environment và Pages Actions source đã read-back. Evidence head `26c3ee5` pass Node22 CI sau provider delay; maintainer merge, main same-run artifact/deployment/public browser proof còn pending. Không tự merge hoặc dùng old-SHA green; [remote acceptance receipt](github-pages-public-acceptance.md) sở hữu trạng thái.
 
 ## Independent scoped review
 

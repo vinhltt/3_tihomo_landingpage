@@ -51,4 +51,4 @@ Local readiness: Node20 full build, isolated explicit Node22.23.3 npm ci/full bu
 
 ## Current production gate
 
-Required check `Pages build` / Actions App15368, strict/admin/PR protection, selected-main branch environment và Pages Actions source đã read-back. Provider Actions/Checks incident đang ảnh hưởng queue/check của current PR head; giữ draft, không dùng old-SHA green, không bypass/merge. [Remote receipt](github-pages-public-acceptance.md) giữ exact CI URLs, settings và observed limitations. Main vẫn A không workflow, chưa có public deployment.
+Required check `Pages build` / Actions App15368, strict/admin/PR protection, selected-main branch environment và Pages Actions source đã read-back. Evidence head `26c3ee5` có successful actual Node22 CI sau provider delay; subsequent PR head vẫn cần own check trước maintainer merge. [Remote receipt](github-pages-public-acceptance.md) giữ exact CI URLs, settings và observed limitations. Main vẫn A không workflow, chưa có public deployment; agent không merge/bypass.

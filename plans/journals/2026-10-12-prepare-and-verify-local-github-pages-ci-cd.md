@@ -34,4 +34,6 @@ Personal-repo protection needed organization-only empty bypass fields omitted. T
 
 GitHub incident 93njd414rpbx reports Actions/Checks/PR degradation and new-run queueing issues. The restored PR head and merge refs exist but current-head check suites/run are absent; workflow/permissions remain valid. No trigger change, dummy status, noop commit, old-SHA rerun, merge or protection bypass was used. Real evidence/runbook updates remain in the same PR. Production deployment/public browser acceptance are blocked on fresh current-head CI and maintainer normal merge; the plan remains in progress.
 
+The real operating-evidence commit 26c3ee5 subsequently received successful Actions run 38252875422 on Node22, with the expected read-only build token, no PR artifact and skipped deployment. This clears the observed fresh-head CI blocker, not the global incident or production acceptance. Each later head must independently pass the enforced check; maintainer normal merge remains mandatory.
+
 > Historical work record — not durable authority. Prefer docs/specs/ADRs for current decisions.
