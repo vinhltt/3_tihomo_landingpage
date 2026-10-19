@@ -1,0 +1,102 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { articlePath, formatUpdated, localePaths } from '../lib/locale';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  others: CollectionEntry<'blog'>[];
+}
+
+const { post, others } = Astro.props;
+const { title, description, updated, sources, tihomo, locale } = post.data;
+const paths = localePaths[locale];
+const { Content } = await render(post);
+const copy = {
+  vi: {
+    breadcrumbs: 'Đường dẫn trang',
+    home: 'Trang chủ',
+    guides: 'Hướng dẫn',
+    article: 'Bài viết',
+    updated: 'Cập nhật',
+    notice:
+      'Bài viết trình bày phương pháp chung, không mô tả cách sử dụng TiHoMo — ứng dụng chưa phát hành công khai. Nội dung không phải tư vấn tài chính, thuế hoặc pháp lý. Số liệu minh họa chỉ phục vụ mục đích hướng dẫn.',
+    sources: 'Nguồn tham khảo',
+    related: 'Thông tin liên quan đến TiHoMo',
+    relatedLink: 'Tham khảo nội dung liên quan trên trang chủ',
+    readNext: 'Đọc tiếp',
+    allGuides: 'Tất cả hướng dẫn',
+  },
+  en: {
+    breadcrumbs: 'Breadcrumb navigation',
+    home: 'Home',
+    guides: 'Guides',
+    article: 'Article',
+    updated: 'Updated',
+    notice:
+      'This article explains general methods, not instructions for using TiHoMo, which is not publicly available. It does not constitute financial, tax or legal advice. Illustrative figures are provided for educational purposes only.',
+    sources: 'References',
+    related: 'Related TiHoMo information',
+    relatedLink: 'Review the relevant homepage section',
+    readNext: 'Read next',
+    allGuides: 'All guides',
+  },
+}[locale];
+---
+
+<Base locale={locale} title={`${title} | TiHoMo`} description={description} current="blog">
+  <article class="article-page">
+    <header class="wrap-narrow page-head article-head">
+      <nav class="crumbs" aria-label={copy.breadcrumbs}>
+        <a href={paths.home}>{copy.home}</a>
+        <span aria-hidden="true"> / </span>
+        <a href={paths.blog}>{copy.guides}</a>
+        <span aria-hidden="true"> / </span>
+        <span aria-current="page">{copy.article}</span>
+      </nav>
+      <h1>{title}</h1>
+      <p class="lead article-summary">{description}</p>
+      <p class="meta">
+        {copy.updated}{' '}<time datetime={updated.toISOString().slice(0, 10)}>{formatUpdated(updated, locale)}</time>
+      </p>
+      <p class="notice">{copy.notice}</p>
+    </header>
+
+    <div class="wrap-narrow prose article-body">
+      <Content />
+    </div>
+
+    <footer class="wrap-narrow post-foot">
+      <section class="article-sources" aria-labelledby="sources-title">
+        <h2 id="sources-title">{copy.sources}</h2>
+        <ol>
+          {
+            sources.map((source) => (
+              <li>
+                <a href={source.url} lang="en" rel="noopener noreferrer">{source.title}</a>{' '}
+                — {source.publisher}
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section class="article-related" aria-labelledby="related-title">
+        <h2 id="related-title">{copy.related}</h2>
+        <p>{tihomo.note}{' '}<a href={`${paths.home}#${tihomo.anchor}`}>{copy.relatedLink}</a>.</p>
+      </section>
+
+      <section class="related-guides" aria-labelledby="read-next-title">
+        <h2 id="read-next-title">{copy.readNext}</h2>
+        <ul>
+          {
+            others.map((other) => (
+              <li><a href={articlePath(locale, other.data.slug)}>{other.data.title}</a></li>
+            ))
+          }
+        </ul>
+        <a class="btn secondary" href={paths.blog}>{copy.allGuides}</a>
+      </section>
+    </footer>
+  </article>
+</Base>

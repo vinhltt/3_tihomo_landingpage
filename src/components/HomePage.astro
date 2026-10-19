@@ -1,0 +1,348 @@
+---
+import Base from '../layouts/Base.astro';
+import { homeCopy } from '../lib/home-content';
+import { articlePath, localePaths, type Locale } from '../lib/locale';
+import StatusBadge from './StatusBadge.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = homeCopy[locale];
+const paths = localePaths[locale];
+const directionUrl = `${paths.home}#direction`;
+
+// Worked example from the statement-reconciliation guide (VI/EN step 3): ledger minus statement.
+const amounts = [350_000, -200_000, 72_000, 99_000];
+const total = amounts.reduce((sum, value) => sum + value, 0);
+let running = 0;
+const steps = amounts.map((value) => {
+  const from = running;
+  running += value;
+  return { value, from: Math.min(from, running), size: Math.abs(value) };
+});
+const scale = Math.max(...steps.map((step) => step.from + step.size));
+const number = new Intl.NumberFormat(locale === 'vi' ? 'vi-VN' : 'en-US');
+const signed = (value: number) => `${value < 0 ? '−' : '+'}${number.format(Math.abs(value))}`;
+const money = (value: number) => (locale === 'vi' ? `${signed(value)} đ` : `VND ${signed(value)}`);
+const bar = (from: number, size: number) => `--from:${((from / scale) * 100).toFixed(2)}%;--size:${((size / scale) * 100).toFixed(2)}%`;
+
+const problemIcons = [
+  'M4 20h4L19 9l-4-4L4 16zM13 7l4 4',
+  'M8 8h11v11H8zM5 16V5h11',
+  'M4 8h13l-3-3M20 16H7l3 3',
+  'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4',
+];
+---
+
+<Base locale={locale} title={copy.title} description={copy.description}>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-layout">
+      <div class="hero-copy">
+        <span class="badge prelaunch">{copy.hero.prelaunch}</span>
+        <h1 id="hero-title">{copy.hero.headline}</h1>
+        <p class="lead">{copy.hero.lead}</p>
+        <div class="cta-row">
+          <a class="btn primary" href={directionUrl}>{copy.primaryCta}</a>
+          <a class="btn secondary" href={paths.blog}>{copy.secondaryCta}</a>
+        </div>
+        <p class="hero-note">{copy.hero.note}</p>
+      </div>
+      <figure class="hero-art">
+        <div class="sculpture">
+          <svg viewBox="0 0 560 580" aria-hidden="true" focusable="false" fill="none">
+            <path
+              d="M-80 75C180 20 110 200 300 177C490 154 490 120 665 194"
+              stroke="var(--art-mid)"
+              stroke-width="46"
+              stroke-linecap="round"
+            />
+            <path
+              d="M-60 380C80 110 480 115 420 300C370 454 77 420 146 291C235 124 587 340 628 520"
+              stroke="var(--art-deep)"
+              stroke-width="82"
+              stroke-linecap="round"
+            />
+            <path
+              d="M-60 344C80 74 480 79 420 264C370 418 77 384 146 255C235 88 587 304 628 484"
+              stroke="var(--art-light)"
+              stroke-width="82"
+              stroke-linecap="round"
+            />
+            <path
+              d="M-60 339C80 69 480 74 420 259"
+              stroke="var(--surface)"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+            <circle cx="440" cy="461" r="28" fill="var(--art-mid)" />
+            <circle cx="93" cy="91" r="12" fill="var(--art-deep)" />
+          </svg>
+        </div>
+        <figcaption>{copy.hero.caption}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section alt" id="problem" aria-labelledby="problem-title">
+    <div class="wrap">
+      <h2 id="problem-title">{copy.problem.title}</h2>
+      <p class="section-intro">{copy.problem.intro}</p>
+      <div class="problem-layout">
+        <figure class="diagram chart">
+          <p class="chart-title">{copy.problem.chart.title}</p>
+          <ol class="waterfall">
+            {
+              steps.map((step, index) => (
+                <li class:list={[step.value < 0 ? 'down' : 'up']}>
+                  <span class="wf-label">{copy.problem.chart.rows[index]}</span>
+                  <span class="wf-track" aria-hidden="true">
+                    <span class="wf-bar" style={bar(step.from, step.size)} />
+                  </span>
+                  <span class="wf-value">{signed(step.value)}</span>
+                </li>
+              ))
+            }
+            <li class="total">
+              <span class="wf-label">{copy.problem.chart.totalLabel}</span>
+              <span class="wf-track" aria-hidden="true">
+                <span class="wf-bar" style={bar(0, total)} />
+              </span>
+              <span class="wf-value">{money(total)}</span>
+            </li>
+          </ol>
+          <figcaption>
+            {copy.problem.chart.captionBefore}{' '}
+            <a href={articlePath(locale, 'statement-reconciliation-checklist')}>{copy.problem.chart.captionLink}</a>{copy.problem.chart.captionAfter}
+          </figcaption>
+        </figure>
+        <div class="problem-grid">
+          {
+            copy.problem.cards.map((card, index) => (
+              <div class="card problem-card">
+                <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d={problemIcons[index]} />
+                </svg>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <p class="positioning-note"><strong>{copy.bridge}</strong></p>
+    </div>
+  </section>
+
+  <section class="section" id="platform" aria-labelledby="platform-title">
+    <div class="wrap">
+      <h2 id="platform-title">{copy.platform.title}</h2>
+      <p class="section-intro">{copy.platform.intro}</p>
+      <dl class="status-legend">
+        {copy.platform.legend.map((item) => (
+          <div>
+            <dt><StatusBadge kind={item.kind} locale={locale} /></dt>
+            <dd>{item.meaning}</dd>
+          </div>
+        ))}
+      </dl>
+      <figure class="stages">
+        {
+          copy.platform.stages.map((stage) => (
+            <div class="stage">
+              <p class="stage-label">{stage.label}</p>
+              {stage.cards.map((card) => (
+                <article class:list={['card', 'feature', card.kind]}>
+                  <StatusBadge kind={card.kind} locale={locale} />
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </article>
+              ))}
+            </div>
+          ))
+        }
+        <figcaption>{copy.platform.caption}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section alt" id="ai-native" aria-labelledby="ai-native-title">
+    <div class="wrap">
+      <StatusBadge kind="direction" locale={locale} />
+      <h2 id="ai-native-title">{copy.aiNative.title}</h2>
+      <p class="section-intro">{copy.aiNative.intro}</p>
+      <figure class="diagram">
+        <figcaption>{copy.aiNative.caption}</figcaption>
+        <ol class="flow flow-4">
+          {
+            copy.aiNative.cards.map((card, index) => (
+              <li>
+                <article class:list={['card', 'flow-node', { gate: index === 2 }]}>
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </article>
+              </li>
+            ))
+          }
+          <li>
+            <div class="flow-node ledger">
+              <p class="node-label">{copy.aiNative.ledger.label}</p>
+              <p>{copy.aiNative.ledger.detail}</p>
+            </div>
+          </li>
+        </ol>
+        <div class="out-of-scope">
+          <p class="node-label"><span aria-hidden="true">⊘ </span>{copy.aiNative.outOfScope.title}</p>
+          <ul>{copy.aiNative.outOfScope.items.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      </figure>
+      <p class="small">{copy.aiNative.note}</p>
+    </div>
+  </section>
+
+  <section class="section alt" id="direction" aria-labelledby="direction-title">
+    <div class="wrap">
+      <div class="direction-panel">
+        <StatusBadge kind="direction" locale={locale} />
+        <div class="direction-head">
+          <h2 id="direction-title">{copy.direction.title}</h2>
+          <p class="section-intro">{copy.direction.intro}</p>
+        </div>
+        <figure class="illustration diagram" aria-labelledby="direction-caption">
+          <figcaption id="direction-caption">{copy.direction.caption}</figcaption>
+          <ol class="flow flow-4">
+            {
+              copy.direction.steps.map((step, index) => (
+                <li>
+                  <div class:list={['flow-node', { gate: index === 3 }]}>
+                    <p class="node-label">{step.label}</p>
+                    <p>{step.detail}</p>
+                    {index === 2 && (
+                      <dl class="chips">
+                        {copy.direction.definitions.map((definition) => (
+                          <div>
+                            <dt>{definition.term}</dt>
+                            <dd>{definition.meaning}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    )}
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </figure>
+      </div>
+      <div class="grid direction-grid">
+        {
+          copy.direction.cards.map((card) => (
+            <article class="card feature">
+              <StatusBadge kind={card.kind} locale={locale} />
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="extensions" aria-labelledby="extensions-title">
+    <div class="wrap">
+      <h2 id="extensions-title">{copy.extensions.title}</h2>
+      <figure class="hub">
+        <p class="hub-core">{copy.extensions.hub}</p>
+        {
+          copy.extensions.cards.map((card) => (
+            <article class:list={['card', 'feature', 'spoke', card.kind]}>
+              <StatusBadge kind={card.kind} locale={locale} />
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </article>
+          ))
+        }
+        <figcaption>{copy.extensions.caption}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="vision" aria-labelledby="vision-title">
+    <div class="wrap">
+      <StatusBadge kind="direction" locale={locale} />
+      <h2 id="vision-title">{copy.vision.title}</h2>
+      <p class="section-intro">{copy.vision.intro}</p>
+      <div class="table-scroll" role="region" tabindex="0" aria-labelledby="compare-caption">
+        <table class="compare">
+          <caption id="compare-caption">{copy.vision.compare.caption}</caption>
+          <thead>
+            <tr>
+              <td></td>
+              {copy.vision.compare.columns.map((column, index) => <th scope="col" class:list={{ chosen: index === 1 }}>{column}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              copy.vision.compare.rows.map((row) => (
+                <tr>
+                  <th scope="row">{row.label}</th>
+                  {row.cells.map((cell, index) => <td class:list={{ chosen: index === 1 }}>{cell}</td>)}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <figure class="diagram">
+        <figcaption>{copy.vision.caption}</figcaption>
+        <ol class="flow flow-3 gates">
+          {
+            copy.vision.gates.map((gate) => (
+              <li>
+                <article class="card flow-node">
+                  <h3>{gate.title}</h3>
+                  <p>{gate.body}</p>
+                  <p class="measures">
+                    <span>{copy.vision.measureLabel}:</span>
+                    {gate.measures.map((measure) => <span class="chip">{measure}</span>)}
+                  </p>
+                </article>
+              </li>
+            ))
+          }
+        </ol>
+      </figure>
+      <p class="small">{copy.vision.note}</p>
+    </div>
+  </section>
+
+  <section class="section alt faq" id="faq" aria-labelledby="faq-title">
+    <div class="wrap faq-section">
+      <h2 id="faq-title">{copy.faq.title}</h2>
+      <div class="faq-list">
+        {
+          copy.faq.items.map((item) => (
+            <details>
+              <summary>{item.question}</summary>
+              <div>
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-band" aria-labelledby="cta-title">
+    <div class="wrap">
+      <h2 id="cta-title">{copy.closing.title}</h2>
+      <p>{copy.closing.body}</p>
+      <div class="cta-row">
+        <a class="btn primary" href={directionUrl}>{copy.primaryCta}</a>
+        <a class="btn secondary" href={paths.blog}>{copy.secondaryCta}</a>
+      </div>
+    </div>
+  </section>
+</Base>

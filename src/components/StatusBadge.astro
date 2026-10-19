@@ -1,0 +1,28 @@
+---
+import type { Locale } from '../lib/locale';
+
+// Fixed status vocabulary so no feature can be shown without a status label.
+const labels = {
+  vi: {
+    have: 'Nền tảng hiện có — chưa phát hành',
+    partial: 'Nền tảng một phần — chưa phát hành',
+    direction: 'Định hướng phát triển',
+    idea: 'Ý tưởng đang được xem xét',
+  },
+  en: {
+    have: 'Existing foundation — not publicly available',
+    partial: 'Partial foundation — not publicly available',
+    direction: 'Development direction',
+    idea: 'Concept under consideration',
+  },
+} as const;
+
+interface Props {
+  kind: keyof (typeof labels)['vi'];
+  locale: Locale;
+}
+
+const { kind, locale } = Astro.props;
+---
+
+<span class={`badge ${kind}`}>{labels[locale][kind]}</span>

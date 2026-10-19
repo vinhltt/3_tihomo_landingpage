@@ -1,0 +1,13 @@
+---
+import type { InferGetStaticPropsType } from 'astro';
+import BlogArticle from '../../../components/BlogArticle.astro';
+import { getLocalizedArticlePaths } from '../../../lib/blog';
+
+export async function getStaticPaths() {
+  return getLocalizedArticlePaths('vi');
+}
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { post, others } = Astro.props;
+---
+
+<BlogArticle post={post} others={others} />

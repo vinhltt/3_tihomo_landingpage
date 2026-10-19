@@ -1,0 +1,10 @@
+/.claude/
+/.omp/
+/.agentkit/
+/.ak-kit.json
+/Agents.md
+/AGENTS.md
+
+node_modules/
+dist/
+.astro/
